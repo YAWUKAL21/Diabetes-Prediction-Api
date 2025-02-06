@@ -1,2 +1,8 @@
-streamlit==1.20.0
-requests==2.28.2
+
+pandas
+scikit-learn
+numpy
+fastapi
+uvicorn
+streamlit
+request
