@@ -129,72 +129,50 @@
 
 import streamlit as st
 import requests
-import time
+import json
 
-# FastAPI URL
-API_URL = "https://diabetes-prediction-api-4.onrender.com/predict/"
+# API URL (update if running on a different host/port)
+API_URL = "https://diabetes-prediction-api-4.onrender.com"  
+API_KEY = "your-secret-api-key"  
 
-# Your API Key (Replace with the actual key)
-API_KEY = "your-secret-api-key"
+# Streamlit UI Setup
+st.set_page_config(page_title="Diabetes Prediction", layout="centered")
+st.title("🔬 Diabetes Prediction App")
+st.markdown("Enter the patient details below to predict the likelihood of diabetes.")
 
-# Set page title
-st.set_page_config(page_title="Diabetes Prediction", page_icon="🩺", layout="centered")
+# Input Fields with Validation
+pregnancies = st.number_input("Pregnancies", min_value=0, step=1)
+glucose = st.number_input("Glucose Level", min_value=0.0, step=0.1)
+blood_pressure = st.number_input("Blood Pressure", min_value=0.0, step=0.1)
+skin_thickness = st.number_input("Skin Thickness", min_value=0.0, step=0.1)
+insulin = st.number_input("Insulin", min_value=0.0, step=0.1)
+bmi = st.number_input("BMI", min_value=0.1, step=0.1)
+diabetes_pedigree = st.number_input("Diabetes Pedigree Function", min_value=0.0, step=0.01)
+age = st.number_input("Age", min_value=1, step=1)
 
-# Title and description
-st.title("Diabetes Prediction App 🩺")
-st.write("Enter your health details below to check your diabetes risk.")
-
-# Collect user input
-col1, col2 = st.columns(2)
-
-with col1:
-    Pregnancies = st.number_input("Pregnancies", min_value=0, max_value=20, step=1)
-    Glucose = st.number_input("Glucose Level", min_value=0, max_value=200, step=1)
-    BloodPressure = st.number_input("Blood Pressure", min_value=0, max_value=200, step=1)
-    SkinThickness = st.number_input("Skin Thickness", min_value=0, max_value=100, step=1)
-
-with col2:
-    Insulin = st.number_input("Insulin Level", min_value=0, max_value=1000, step=1)
-    BMI = st.number_input("BMI", min_value=0.0, max_value=50.0, step=0.1)
-    DiabetesPedigreeFunction = st.number_input("Diabetes Pedigree Function", min_value=0.0, max_value=2.5, step=0.01)
-    Age = st.number_input("Age", min_value=0, max_value=120, step=1)
-
-# Predict button
-if st.button("Predict Diabetes"):
+# Predict Button
+if st.button("🔍 Predict"):
     input_data = {
-        "Pregnancies": Pregnancies,
-        "Glucose": Glucose,
-        "BloodPressure": BloodPressure,
-        "SkinThickness": SkinThickness,
-        "Insulin": Insulin,
-        "BMI": BMI,
-        "DiabetesPedigreeFunction": DiabetesPedigreeFunction,
-        "Age": Age,
+        "Pregnancies": pregnancies,
+        "Glucose": glucose,
+        "BloodPressure": blood_pressure,
+        "SkinThickness": skin_thickness,
+        "Insulin": insulin,
+        "BMI": bmi,
+        "DiabetesPedigreeFunction": diabetes_pedigree,
+        "Age": age
     }
-
-    headers = {"X-API-Key": API_KEY}  # Include API key in the request
-
-    with st.spinner("Analyzing your data..."):
-        time.sleep(2)  # Simulate loading time
-
+    
+    headers = {"X-API-Key": API_KEY, "Content-Type": "application/json"}
     try:
-        response = requests.post(API_URL, json=input_data, headers=headers)
-
+        response = requests.post(API_URL, headers=headers, data=json.dumps(input_data))
+        result = response.json()
+        
         if response.status_code == 200:
-            result = response.json()
-            prediction = result["prediction"]
+            prediction = "Diabetic" if result["prediction"] == 1 else "Non-Diabetic"
             probability = result["probability"]
-
-            st.success("Prediction Successful!")
-
-            if prediction == 1:
-                st.error("You are at risk of Diabetes 😢")
-            else:
-                st.success("You are NOT at risk of Diabetes 😊")
-
-            st.write(f"Probability: {probability * 100:.2f}%")
+            st.success(f"**Prediction:** {prediction}\n**Probability:** {probability:.4f}")
         else:
-            st.error(f"Error: {response.json().get('detail', 'Unknown error')}")
-
+            st.error(f"Error: {result['detail']}")
     except Exception as e:
-        st.error(f"Error connecting to the API: {e}")
+        st.error(f"Failed to connect to API: {str(e)}")

@@ -77,7 +77,7 @@
 # def root():
 #     return {"message": "🚀 Diabetes Prediction API is running!"}
 
-from fastapi import FastAPI, HTTPException, Depends, Security
+from fastapi import FastAPI
 from fastapi.security import APIKeyHeader
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
