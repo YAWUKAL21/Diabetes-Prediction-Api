@@ -16,51 +16,51 @@
 # # Custom CSS for a better gradient background
 # st.markdown(
 #     """
-#     <style>
-#         /* Modern Gradient Background */
-#         body {
-#             background: linear-gradient(to right, #00c6ff, #3a47d5);
-#             color: white;
-#         }
+    # <style>
+    #     /* Modern Gradient Background */
+    #     body {
+    #         background: linear-gradient(to right, #00c6ff, #3a47d5);
+    #         color: white;
+    #     }
 
-#         .stApp {
-#             background: linear-gradient(to right, #00c6ff, #3a47d5);
-#             color: white;
-#         }
+    #     .stApp {
+    #         background: linear-gradient(to right, #00c6ff, #3a47d5);
+    #         color: white;
+    #     }
 
-#         /* Prediction container with background image */
-#         .prediction-container {
-#             position: relative;
-#             width: 100%;
-#             max-width: 600px;
-#             margin: auto;
-#             padding: 40px;
-#             border-radius: 15px;
-#             text-align: center;
-#             background: url('diabetes.jpg') no-repeat center center;
-#             background-size: cover;
-#             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-#             color: white;
-#         }
+    #     /* Prediction container with background image */
+    #     .prediction-container {
+    #         position: relative;
+    #         width: 100%;
+    #         max-width: 600px;
+    #         margin: auto;
+    #         padding: 40px;
+    #         border-radius: 15px;
+    #         text-align: center;
+    #         background: url('diabetes.jpg') no-repeat center center;
+    #         background-size: cover;
+    #         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    #         color: white;
+    #     }
 
-#         /* Dark overlay for text readability */
-#         .prediction-container::before {
-#             content: "";
-#             position: absolute;
-#             top: 0;
-#             left: 0;
-#             width: 100%;
-#             height: 100%;
-#             background: rgba(0, 0, 0, 0.6);
-#             border-radius: 15px;
-#         }
+    #     /* Dark overlay for text readability */
+    #     .prediction-container::before {
+    #         content: "";
+    #         position: absolute;
+    #         top: 0;
+    #         left: 0;
+    #         width: 100%;
+    #         height: 100%;
+    #         background: rgba(0, 0, 0, 0.6);
+    #         border-radius: 15px;
+    #     }
 
-#         /* Ensure text appears above the overlay */
-#         .prediction-container h2, .prediction-container h3 {
-#             position: relative;
-#             z-index: 2;
-#         }
-#     </style>
+    #     /* Ensure text appears above the overlay */
+    #     .prediction-container h2, .prediction-container h3 {
+    #         position: relative;
+    #         z-index: 2;
+    #     }
+    # </style>
 #     """,
 #     unsafe_allow_html=True
 # )
@@ -130,13 +130,16 @@ import streamlit as st
 import requests
 import time
 
-# Correct API URL
+# API URL (point to your deployed FastAPI backend)
 API_URL = "https://diabetes-prediction-api-4.onrender.com/predict/"
+
+# API Key
+API_KEY = "your-secret-api-key"
 
 # Custom CSS for styling
 st.markdown(
     """
-    <style>
+       <style>
         /* Modern Gradient Background */
         body {
             background: linear-gradient(to right, #00c6ff, #3a47d5);
@@ -186,8 +189,8 @@ st.markdown(
 )
 
 # Title and description
-st.markdown("<h1 style='text-align: center; color: white;'>Diabetes Prediction App 🩺</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center;'>Enter your health details below to check your diabetes risk.</p>", unsafe_allow_html=True)
+st.title("Diabetes Prediction App 🩺")
+st.write("Enter your health details below to check your diabetes risk.")
 
 # Collect user input
 col1, col2 = st.columns(2)
@@ -221,8 +224,16 @@ if st.button("🔍 Predict Diabetes"):
         time.sleep(2)  # Simulate loading time
 
     try:
-        response = requests.post(API_URL, json=input_data)
+        # Set headers for the request
+        headers = {
+            "Content-Type": "application/json",
+            "X-API-Key": API_KEY,  # Include the API key
+        }
 
+        # Send request to FastAPI backend
+        response = requests.post(API_URL, json=input_data, headers=headers)
+
+        # Check response status code
         if response.status_code == 200:
             result = response.json()
             prediction = result["prediction"]
@@ -230,19 +241,16 @@ if st.button("🔍 Predict Diabetes"):
 
             st.success("✅ Prediction Successful!")
 
-            # Display prediction inside a styled div
-            prediction_text = ""
+            # Display prediction result
             if prediction == 1:
-                prediction_text = "<h2 style='color: red;'>You are at risk of Diabetes 😢</h2>"
+                st.error("You are at risk of Diabetes 😢")
             else:
-                prediction_text = "<h2 style='color: green;'>You are NOT at risk of Diabetes 😊</h2>"
+                st.success("You are NOT at risk of Diabetes 😊")
 
-            st.markdown(
-                f"<div class='prediction-container'>{prediction_text}<h3>Probability: {probability * 100:.2f}%</h3></div>",
-                unsafe_allow_html=True
-            )
+            st.write(f"Probability: {probability * 100:.2f}%")
+
         else:
-            st.error(f"Error: {response.status_code} - {response.text}")
+            st.error(f"Error: {response.status_code} - {response.text}")  # Display detailed error message
 
     except Exception as e:
         st.error(f"Error connecting to the API: {e}")

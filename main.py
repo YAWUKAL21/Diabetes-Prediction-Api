@@ -11,7 +11,7 @@
 # # Enable CORS to allow requests from the frontend (Streamlit)
 # app.add_middleware(
 #     CORSMiddleware,
-#     allow_origins=["https://your-streamlit-app.com"],
+#     allow_origins=["*"],
 #     allow_credentials=True,
 #     allow_methods=["*"],
 #     allow_headers=["*"],
@@ -77,24 +77,38 @@
 # def root():
 #     return {"message": "🚀 Diabetes Prediction API is running!"}
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, Security
+from fastapi.security import APIKeyHeader
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import joblib
 import pandas as pd
-from pydantic import BaseModel
 from sklearn.preprocessing import StandardScaler
 
 # Initialize FastAPI app
 app = FastAPI()
 
-# Enable CORS to allow requests from the frontend (Streamlit)
+# Enable CORS (Cross-Origin Resource Sharing)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8501", "https://your-streamlit-app.streamlit.app"],  # Add your Streamlit app's domain
+    allow_origins=["*"],  # Allow all origins (for testing)
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
 )
+
+# API Key Authentication
+API_KEY_NAME = "X-API-Key"
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
+
+# Replace this with your actual API key (or fetch it from environment variables)
+API_KEY = "your-secret-api-key"
+
+# Dependency to validate the API key
+async def get_api_key(api_key: str = Security(api_key_header)):
+    if api_key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API Key")
+    return api_key
 
 # Load trained model and scaler
 try:
@@ -134,7 +148,7 @@ def preprocess(data: DiabetesInput):
     return df_input
 
 @app.post("/predict/")
-def predict_diabetes(data: DiabetesInput):
+def predict_diabetes(data: DiabetesInput, api_key: str = Depends(get_api_key)):
     try:
         print(f"📥 Received input: {data}")
 
@@ -154,4 +168,4 @@ def predict_diabetes(data: DiabetesInput):
 
 @app.get("/")
 def root():
-    return {"message": "🚀 Diabetes Prediction API is running!"}
+    return {"message": "🚀 Diabetes Prediction API is running"}
