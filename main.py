@@ -77,7 +77,7 @@
 # def root():
 #     return {"message": "🚀 Diabetes Prediction API is running!"}
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Depends, Security
 from fastapi.security import APIKeyHeader
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -88,10 +88,10 @@ from sklearn.preprocessing import StandardScaler
 # Initialize FastAPI app
 app = FastAPI()
 
-# Enable CORS (Cross-Origin Resource Sharing)
+# Enable CORS (Allow all origins for testing, restrict in production)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins (for testing)
+    allow_origins=["*"],  # Allow all origins
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers
@@ -106,6 +106,8 @@ API_KEY = "your-secret-api-key"
 
 # Dependency to validate the API key
 async def get_api_key(api_key: str = Security(api_key_header)):
+    if not api_key:
+        raise HTTPException(status_code=403, detail="API Key missing")
     if api_key != API_KEY:
         raise HTTPException(status_code=403, detail="Invalid API Key")
     return api_key
