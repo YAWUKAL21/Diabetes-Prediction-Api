@@ -134,6 +134,9 @@ import time
 # FastAPI URL
 API_URL = "https://diabetes-prediction-api-4.onrender.com/predict/"
 
+# Your API Key (Replace with the actual key)
+API_KEY = "your-secret-api-key"
+
 # Set page title
 st.set_page_config(page_title="Diabetes Prediction", page_icon="🩺", layout="centered")
 
@@ -169,11 +172,13 @@ if st.button("Predict Diabetes"):
         "Age": Age,
     }
 
+    headers = {"X-API-Key": API_KEY}  # Include API key in the request
+
     with st.spinner("Analyzing your data..."):
         time.sleep(2)  # Simulate loading time
 
     try:
-        response = requests.post(API_URL, json=input_data)
+        response = requests.post(API_URL, json=input_data, headers=headers)
 
         if response.status_code == 200:
             result = response.json()

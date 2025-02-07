@@ -101,7 +101,7 @@ app.add_middleware(
 API_KEY_NAME = "X-API-Key"
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 
-# Replace this with your actual API key (or fetch it from environment variables)
+# Replace this with your actual API key (make sure it's the same as in Streamlit)
 API_KEY = "your-secret-api-key"
 
 # Dependency to validate the API key
