@@ -5,7 +5,10 @@ from PIL import Image
 import time
 
 # FastAPI URL
-API_URL = "https://diabetes-prediction-api-2.onrender.com/predict"
+# API_URL = "https://diabetes-prediction-api-2.onrender.com/predict"
+API_URL = "https://diabetes-prediction-api-4.onrender.com/predict/"
+
+
 
 # Set page title and icon
 st.set_page_config(page_title="Diabetes Prediction", page_icon="🩺", layout="centered")
