@@ -81,9 +81,9 @@ st.markdown(
 )
 
 # Load a medical-themed image
-image = Image.open("diabetes.jpg")  
-st.image(image, use_column_width=True)
-#st.image("https://cdn.pixabay.com/photo/2020/04/16/19/18/diabetes-5054901_1280.jpg", use_column_width=True)
+# image = Image.open("diabetes.jpg")  
+# st.image(image, use_column_width=True)
+st.image("https://cdn.pixabay.com/photo/2020/04/16/19/18/diabetes-5054901_1280.jpg", use_column_width=True)
 
 # Title and description
 st.markdown("<h1 style='text-align: center; color: white;'>Diabetes Prediction App 🩺</h1>", unsafe_allow_html=True)
