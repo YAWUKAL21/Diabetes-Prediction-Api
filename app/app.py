@@ -137,56 +137,56 @@ API_URL = "https://diabetes-prediction-api-4.onrender.com/predict/"
 API_KEY = "your-secret-api-key"
 
 # Custom CSS for styling
-st.markdown(
-    """
-       <style>
-        /* Modern Gradient Background */
-        body {
-            background: linear-gradient(to right, #00c6ff, #3a47d5);
-            color: white;
-        }
+# st.markdown(
+#     """
+#        <style>
+#         /* Modern Gradient Background */
+#         body {
+#             background: linear-gradient(to right, #00c6ff, #3a47d5);
+#             color: white;
+#         }
 
-        .stApp {
-            background: linear-gradient(to right, #00c6ff, #3a47d5);
-            color: white;
-        }
+#         .stApp {
+#             background: linear-gradient(to right, #00c6ff, #3a47d5);
+#             color: white;
+#         }
 
-        /* Prediction container with background image */
-        .prediction-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin: auto;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            background: url('diabetes.jpg') no-repeat center center;
-            background-size: cover;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-            color: white;
-        }
+#         /* Prediction container with background image */
+#         .prediction-container {
+#             position: relative;
+#             width: 100%;
+#             max-width: 600px;
+#             margin: auto;
+#             padding: 40px;
+#             border-radius: 15px;
+#             text-align: center;
+#             background: url('diabetes.jpg') no-repeat center center;
+#             background-size: cover;
+#             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+#             color: white;
+#         }
 
-        /* Dark overlay for text readability */
-        .prediction-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 15px;
-        }
+#         /* Dark overlay for text readability */
+#         .prediction-container::before {
+#             content: "";
+#             position: absolute;
+#             top: 0;
+#             left: 0;
+#             width: 100%;
+#             height: 100%;
+#             background: rgba(0, 0, 0, 0.6);
+#             border-radius: 15px;
+#         }
 
-        /* Ensure text appears above the overlay */
-        .prediction-container h2, .prediction-container h3 {
-            position: relative;
-            z-index: 2;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+#         /* Ensure text appears above the overlay */
+#         .prediction-container h2, .prediction-container h3 {
+#             position: relative;
+#             z-index: 2;
+#         }
+#     </style>
+#     """,
+#     unsafe_allow_html=True
+# )
 
 # Title and description
 st.title("Diabetes Prediction App 🩺")
