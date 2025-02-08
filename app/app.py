@@ -133,7 +133,7 @@ import json
 
 # API URL (update if running on a different host/port)
 API_URL = "https://diabetes-prediction-api-4.onrender.com"  
-API_KEY = "your-secret-api-key"  
+API_KEY = "your-secret-api-key"  # Make sure this is correct!
 
 # Streamlit UI Setup
 st.set_page_config(page_title="Diabetes Prediction", layout="centered")
@@ -165,7 +165,7 @@ if st.button("🔍 Predict"):
     
     headers = {"X-API-Key": API_KEY, "Content-Type": "application/json"}
     try:
-        response = requests.post(API_URL, headers=headers, data=json.dumps(input_data))
+        response = requests.post(API_URL + "/predict/", headers=headers, data=json.dumps(input_data))
         result = response.json()
         
         if response.status_code == 200:

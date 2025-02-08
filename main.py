@@ -77,40 +77,24 @@
 # def root():
 #     return {"message": "🚀 Diabetes Prediction API is running!"}
 
-from fastapi import FastAPI, HTTPException, Depends, Security
-from fastapi.security import APIKeyHeader
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 import joblib
 import pandas as pd
+from pydantic import BaseModel
 from sklearn.preprocessing import StandardScaler
 
 # Initialize FastAPI app
 app = FastAPI()
 
-# Enable CORS (Allow all origins for testing, restrict in production)
+# Enable CORS to allow requests from the frontend (Streamlit)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
+    allow_origins=["*"],  # You can narrow this down to your Streamlit app's URL
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
-
-# API Key Authentication
-API_KEY_NAME = "X-API-Key"
-api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
-
-# Replace this with your actual API key (make sure it's the same as in Streamlit)
-API_KEY = "your-secret-api-key"
-
-# Dependency to validate the API key
-async def get_api_key(api_key: str = Security(api_key_header)):
-    if not api_key:
-        raise HTTPException(status_code=403, detail="API Key missing")
-    if api_key != API_KEY:
-        raise HTTPException(status_code=403, detail="Invalid API Key")
-    return api_key
 
 # Load trained model and scaler
 try:
@@ -150,7 +134,7 @@ def preprocess(data: DiabetesInput):
     return df_input
 
 @app.post("/predict/")
-def predict_diabetes(data: DiabetesInput, api_key: str = Depends(get_api_key)):
+def predict_diabetes(data: DiabetesInput):
     try:
         print(f"📥 Received input: {data}")
 
@@ -170,4 +154,4 @@ def predict_diabetes(data: DiabetesInput, api_key: str = Depends(get_api_key)):
 
 @app.get("/")
 def root():
-    return {"message": "🚀 Diabetes Prediction API is running"}
+    return {"message": "🚀 Diabetes Prediction API is running!"}
