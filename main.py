@@ -91,9 +91,9 @@ app = FastAPI()
 # Enable CORS to allow requests from anywhere (Frontend, Postman, etc.)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Change this to the specific domain if needed
+    allow_origins=["*"],  # Allow all domains or specify domains as needed
     allow_credentials=True,
-   allow_methods=["GET", "POST", "OPTIONS"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_methods=["GET", "POST", "OPTIONS"],  # Allow all HTTP methods (GET, POST, etc.)
     allow_headers=["Content-Type", "Authorization"],  # Allow all headers
 )
 
