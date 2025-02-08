@@ -131,7 +131,7 @@ import streamlit as st
 import requests
 
 # FastAPI endpoint
-API_URL = "https://diabetes-prediction-api-7.onrender.com/predict"  # Update this if the FastAPI server runs on a different host
+API_URL = "https://diabetes-prediction-api-7.onrender.com/predict/"  # Update this if the FastAPI server runs on a different host
 
 # Streamlit UI
 st.title("Diabetes Prediction App")
