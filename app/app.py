@@ -4,7 +4,7 @@ import requests
 import time
 
 # FastAPI URL
-API_URL = "http://localhost:8000/predict/"  # Change to your FastAPI URL if hosted online
+API_URL = "https://diabetes-prediction-api-0qct.onrender.com/predict/"  # Change to your FastAPI URL if hosted online
 
 # Set page title and icon
 st.set_page_config(page_title="Diabetes Prediction", page_icon="🩺", layout="centered")
