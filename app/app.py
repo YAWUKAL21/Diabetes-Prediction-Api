@@ -129,28 +129,27 @@
 
 import streamlit as st
 import requests
-import json
 
-# API URL (update this if the deployment URL changes)
-API_URL = "https://diabetes-prediction-api-6-ptgv.onrender.com/predict/"
+# FastAPI endpoint
+API_URL = "https://diabetes-prediction-api-7.onrender.com/predict"  # Update this if the FastAPI server runs on a different host
 
-# Streamlit UI Setup
-st.set_page_config(page_title="Diabetes Prediction", layout="centered")
-st.title("🔬 Diabetes Prediction App")
-st.markdown("Enter the patient details below to predict the likelihood of diabetes.")
+# Streamlit UI
+st.title("Diabetes Prediction App")
+st.write("Enter the patient details to predict the likelihood of diabetes.")
 
-# Input Fields with Validation
-pregnancies = st.number_input("Pregnancies", min_value=0, step=1)
-glucose = st.number_input("Glucose Level", min_value=0.0, step=0.1)
-blood_pressure = st.number_input("Blood Pressure", min_value=0.0, step=0.1)
-skin_thickness = st.number_input("Skin Thickness", min_value=0.0, step=0.1)
-insulin = st.number_input("Insulin", min_value=0.0, step=0.1)
-bmi = st.number_input("BMI", min_value=0.1, step=0.1)
-diabetes_pedigree = st.number_input("Diabetes Pedigree Function", min_value=0.0, step=0.01)
-age = st.number_input("Age", min_value=1, step=1)
+# Input fields
+pregnancies = st.number_input("Pregnancies", min_value=0, max_value=20, value=0)
+glucose = st.number_input("Glucose Level", min_value=0.0, max_value=300.0, value=100.0)
+blood_pressure = st.number_input("Blood Pressure", min_value=0.0, max_value=200.0, value=70.0)
+skin_thickness = st.number_input("Skin Thickness", min_value=0.0, max_value=100.0, value=20.0)
+insulin = st.number_input("Insulin Level", min_value=0.0, max_value=1000.0, value=30.0)
+bmi = st.number_input("BMI", min_value=0.0, max_value=100.0, value=25.0)
+diabetes_pedigree = st.number_input("Diabetes Pedigree Function", min_value=0.0, max_value=2.5, value=0.5)
+age = st.number_input("Age", min_value=0, max_value=120, value=30)
 
-# Predict Button
-if st.button("🔍 Predict"):
+# Prediction button
+if st.button("Predict"):
+    # Prepare input data
     input_data = {
         "Pregnancies": pregnancies,
         "Glucose": glucose,
@@ -162,22 +161,17 @@ if st.button("🔍 Predict"):
         "Age": age
     }
 
-    headers = {"Content-Type": "application/json"}
     try:
-        response = requests.post(API_URL, headers=headers, data=json.dumps(input_data))
-        
-        # Check if the response is JSON
-        if response.headers.get("Content-Type") == "application/json":
-            result = response.json()
-            
-            if response.status_code == 200:
-                prediction = "Diabetic" if result["prediction"] == 1 else "Non-Diabetic"
-                probability = result["probability"]
-                st.success(f"**Prediction:** {prediction}\n**Probability:** {probability:.4f}")
-            else:
-                st.error(f"Error: {result['detail']}")
+        # Send request to FastAPI
+        response = requests.post(API_URL, json=input_data)
+        result = response.json()
+
+        if response.status_code == 200:
+            prediction = result["prediction"]
+            probability = result["probability"]
+            st.success(f"Prediction: {'Diabetic' if prediction == 1 else 'Non-Diabetic'}")
+            st.info(f"Probability of diabetes: {probability:.4f}")
         else:
-            st.error("Received unexpected response format. Please check API logs.")
-    
+            st.error(f"Error: {result['detail']}")
     except Exception as e:
-        st.error(f"Failed to connect to API: {str(e)}")
+        st.error(f"Failed to connect to API: {e}")
