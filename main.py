@@ -93,8 +93,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Change this to the specific domain if needed
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
+   allow_methods=["GET", "POST", "OPTIONS"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["Content-Type", "Authorization"],  # Allow all headers
 )
 
 # Load trained model and scaler
