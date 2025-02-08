@@ -77,6 +77,7 @@
 # def root():
 #     return {"message": "🚀 Diabetes Prediction API is running!"}
 
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import joblib
@@ -87,13 +88,13 @@ from sklearn.preprocessing import StandardScaler
 # Initialize FastAPI app
 app = FastAPI()
 
-# Enable CORS to allow requests from the frontend (Streamlit)
+# Enable CORS to allow requests from anywhere (Frontend, Postman, etc.)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # You can narrow this down to your Streamlit app's URL
+    allow_origins=["*"],  # Change this to the specific domain if needed
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
 )
 
 # Load trained model and scaler

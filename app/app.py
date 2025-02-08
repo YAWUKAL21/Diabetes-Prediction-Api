@@ -131,8 +131,8 @@ import streamlit as st
 import requests
 import json
 
-# API URL (update if running on a different host/port)
-API_URL = "https://diabetes-prediction-api-6-ptgv.onrender.com"  
+# API URL (update this if the deployment URL changes)
+API_URL = "https://diabetes-prediction-api-6-ptgv.onrender.com/predict/"
 
 # Streamlit UI Setup
 st.set_page_config(page_title="Diabetes Prediction", layout="centered")
@@ -161,17 +161,23 @@ if st.button("🔍 Predict"):
         "DiabetesPedigreeFunction": diabetes_pedigree,
         "Age": age
     }
-    
+
     headers = {"Content-Type": "application/json"}
     try:
-        response = requests.post(API_URL + "/predict/", headers=headers, data=json.dumps(input_data))
-        result = response.json()
+        response = requests.post(API_URL, headers=headers, data=json.dumps(input_data))
         
-        if response.status_code == 200:
-            prediction = "Diabetic" if result["prediction"] == 1 else "Non-Diabetic"
-            probability = result["probability"]
-            st.success(f"**Prediction:** {prediction}\n**Probability:** {probability:.4f}")
+        # Check if the response is JSON
+        if response.headers.get("Content-Type") == "application/json":
+            result = response.json()
+            
+            if response.status_code == 200:
+                prediction = "Diabetic" if result["prediction"] == 1 else "Non-Diabetic"
+                probability = result["probability"]
+                st.success(f"**Prediction:** {prediction}\n**Probability:** {probability:.4f}")
+            else:
+                st.error(f"Error: {result['detail']}")
         else:
-            st.error(f"Error: {result['detail']}")
+            st.error("Received unexpected response format. Please check API logs.")
+    
     except Exception as e:
         st.error(f"Failed to connect to API: {str(e)}")
