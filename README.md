@@ -118,8 +118,8 @@ For questions or collaborations, feel free to reach out via or create an issue i
 
 Develped by **Yabkal**:
 
-### 🔗 [Email]:(yabkalmelak@gmail.com) yabkalmelak@gmail.com
+### 🔗 [Email]:(yabkalmelak@gmail.com) 
 
-### 🔗 [GitHub]:(https://github.com/YAWUKAL21) https://github.com/YAWUKAL21
+### 🔗 [GitHub]:(https://github.com/YAWUKAL21) 
 
-### 🔗 [Linkedin]:(https://www.linkedin.com/in/yawkal-melak-7913b1307) https://www.linkedin.com/in/yawkal-melak-7913b1307
+### 🔗 [Linkedin]:(https://www.linkedin.com/in/yawkal-melak-7913b1307) 
