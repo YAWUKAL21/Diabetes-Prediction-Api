@@ -53,9 +53,11 @@ pip install -r requirements.txt
 uvicorn app:app --reload
 ```
 
-- The API will be available at: [https://diabetes-prediction-api-0qct.onrender.com/docs](https://diabetes-prediction-api-0qct.onrender.com/docs)
+- The API will be available at: [https://diabetes-prediction-api-0qct.onrender.com/docs]
 -Open:
-### 🔗 [LIVE ON API](https://diabetes-prediction-api-0qct.onrender.com/docs) 
+
+🔗 **Live API URL:** [https://diabetes-prediction-api-0qct.onrender.com/docs](https://diabetes-prediction-api-0qct.onrender.com)
+
 
 ### 5. Run the Streamlit Frontend
 
