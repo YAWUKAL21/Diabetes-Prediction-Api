@@ -44,14 +44,14 @@ pip install -r requirements.txt
 ```sh
 uvicorn app:app --reload
 ```
-- The API will be available at: `https://diabetes-prediction-api-0qct.onrender.com`
+- The API will be available at: 
+ ### 🔗 [LIVE On API URL](https://diabetes-prediction-api-0qct.onrender.com)
 
 ### 5. Run the Streamlit Frontend
 ```sh
 streamlit run app.py
 ```
-- Open `https://diabetes-prediction-api-1-jx5c.onrender.com` 
-
+ ### 🔗 [LIVE On STREAM URL](https://diabetes-prediction-api-1-jx5c.onrender.com)
 ## API Endpoints
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -92,9 +92,10 @@ This project is licensed under the MIT License.
 - **Scikit-learn, FastAPI, and Streamlit** for making machine learning deployment seamless.
 
 ## Contact
-For questions or collaborations, feel free to reach out via [yabkalmelak@gmail.com] or create an issue in this repository.
+For questions or collaborations, feel free to reach out via or create an issue in this repository.
 
----
+---Develped by  **Yabkal**:
 
-### 🔗 [GitHub Repository](https://github.com/YAWUKAL21/Diabetes-Prediction-Api.git)
-
+### 🔗 [Email](yabkalmelak@gmail.com)
+### 🔗 [GitHub ](https://github.com/YAWUKAL21)
+### 🔗 [Linkedin](https://www.linkedin.com/in/yawkal-melak-7913b1307)
