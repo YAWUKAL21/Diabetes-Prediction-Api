@@ -53,7 +53,7 @@ pip install -r requirements.txt
 uvicorn app:app --reload
 ```
 
-- The API will be available at: `https://diabetes-prediction-api-0qct.onrender.com`
+- The API will be available at: [https://diabetes-prediction-api-0qct.onrender.com](https://diabetes-prediction-api-0qct.onrender.com)
 
 ### 5. Run the Streamlit Frontend
 
@@ -61,7 +61,7 @@ uvicorn app:app --reload
 streamlit run app.py
 ```
 
-- Open `https://diabetes-prediction-api-1-jx5c.onrender.com` in your browser to access the web app.
+- Open [https://diabetes-prediction-api-1-jx5c.onrender.com](https://diabetes-prediction-api-1-jx5c.onrender.com) in your browser to access the web app.
 
 ## API Endpoints
 
@@ -110,7 +110,7 @@ This project is licensed under the MIT License.
 
 ---
 
-### 🔗 [GitHub Repository](https://github.com/YAWUKAL21/Diabetes-Prediction-Api.git)
+### 🔗 [GitHub Repository](https://github.com/YAWUKAL21/Diabetes-Prediction-Api.git):https://github.com/YAWUKAL21/Diabetes-Prediction-Api.git
 
 ## Contact
 
@@ -118,8 +118,8 @@ For questions or collaborations, feel free to reach out via or create an issue i
 
 Develped by **Yabkal**:
 
-### 🔗 [Email](yabkalmelak@gmail.com) yabkalmelak@gmail.com
+### 🔗 [Email]:(yabkalmelak@gmail.com) yabkalmelak@gmail.com
 
-### 🔗 [GitHub ](https://github.com/YAWUKAL21) https://github.com/YAWUKAL21
+### 🔗 [GitHub]:(https://github.com/YAWUKAL21) https://github.com/YAWUKAL21
 
-### 🔗 [Linkedin](https://www.linkedin.com/in/yawkal-melak-7913b1307) https://www.linkedin.com/in/yawkal-melak-7913b1307
+### 🔗 [Linkedin]:(https://www.linkedin.com/in/yawkal-melak-7913b1307) https://www.linkedin.com/in/yawkal-melak-7913b1307
