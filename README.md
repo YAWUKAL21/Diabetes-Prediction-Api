@@ -50,7 +50,7 @@ uvicorn app:app --reload
 ```sh
 streamlit run app.py
 ```
-- Open `https://diabetes-prediction-api-1-jx5c.onrender.com` in your browser to access the web app.
+- Open `https://diabetes-prediction-api-1-jx5c.onrender.com` 
 
 ## API Endpoints
 | Endpoint | Method | Description |
